@@ -13,7 +13,7 @@ public class Book {
     public String status;
     public String kind;
 
-    public int BookChoice;
+    public int bookChoice;
 
     static ArrayList<Book> BookList = new ArrayList<Book>();
 
@@ -68,7 +68,7 @@ public class Book {
             System.out.println("---------------------------------------------------------");
 
         } else {
-            System.out.println("\n < ERROR >  Check your input!!");
+            System.out.println("\n < MISSPELLING >  Check your input!!");
             choice = 5;
         }
 
@@ -79,7 +79,7 @@ public class Book {
             System.out.println(">-------------------------------------------------------------");
             System.out.println("\n> There Library is Empty! Please add a book first!\n");
             System.out.println(">-------------------------------------------------------------");
-            Book.displayMenu();//Display menu.
+            displayMenu();//Display menu.
             choice = choiceInput.nextInt();//Register new choice.
 
         } else {
@@ -91,34 +91,33 @@ public class Book {
         }
     }
 
-    public void removeBook(){
-        int i = 0;
-        System.out.println("---------------------------------------------------------");
-        System.out.println("> Here are all the books registered in the library: ");
-        System.out.println("---------------------------------------------------------");
+    public void removeBook() {
+        if (BookList.size() == 0) {
+            System.out.println("---------------------------------------------------------");
+            System.out.println("\nLibrary is empty! Please add a Book first!");
+            System.out.println("---------------------------------------------------------");
+            choice = 5;
+        } else {
+            System.out.println("---------------------------------------------------------");
+            System.out.println("> Here are all the books registered in the library: ");
+            System.out.println("---------------------------------------------------------");
 
-        while (i < BookList.size() && BookList.size() > 0){//show the user the list of all the books
-            System.out.printf("\n> Book number %s:\n%s",i+1,BookList.get(i));
-            i = i+1;
-        }//end of while loop.
+            int i = 0;
+            while (i < BookList.size() && BookList.size() > 0) {//show the user the list of all the books
+                System.out.printf("\n> Book number %s:\n%s", i + 1, BookList.get(i));
+                i = i + 1;
+            }//end of while loop.
 
-        System.out.println("\n\n> Choose an available book from the above list and write down it's number: ");
-        int BookChoice = choiceInput.nextInt()-1;//register user's book choice.
+            System.out.println("\n\n> Choose an available book from the above list and write down it's number: ");
+            bookChoice = choiceInput.nextInt(); //register user's book choice.
 
-        while(choice == 5){
-            try{
-                if (BookChoice > 0 && BookChoice < BookList.size() && BookList.get(BookChoice).status.equalsIgnoreCase("Available")){//Check if the book to be borrowed is available.
-                    //Print the borrowed book information and change the book status to borrowed.
-                    BookList.remove(BookChoice);
-                    System.out.printf("\n> You have chosen to delete the following book: %s\n", BookList.get(BookChoice));
-                    System.out.printf("\n> The Book %s is deleted.\n", BookList.get(BookChoice));
-                    choice = 7;
-                }
-            }catch(InputMismatchException error){
-                System.out.println("<ERROR> Please enter a number of book from the list: ");
-                choiceInput.nextInt();
+            if (bookChoice > 0 && bookChoice <= BookList.size()) {
+                bookChoice--;
+                System.out.printf("\n> You have chosen to delete the following book: %s\n", BookList.get(bookChoice));
+                System.out.printf("\n> The Book %s is deleted.\n", BookList.get(bookChoice));
+                BookList.remove(bookChoice);
                 choice = 5;
-            }catch(IndexOutOfBoundsException error){
+            } else if (bookChoice == 0 || bookChoice > BookList.size()) {
                 System.out.println("<ERROR> Please enter a number of book from the list: ");
                 choice = 5;
             }
