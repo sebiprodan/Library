@@ -16,7 +16,7 @@ public class ArtAlbum extends Book{
         return BookInfo;
     }
 
-    public void createArt() {
+    public void createBook() {
         System.out.println("Enter the title of the art album: ");
         title = userInput.nextLine();
 
@@ -28,6 +28,8 @@ public class ArtAlbum extends Book{
 
         System.out.println("Enter the quality of the art album's paper: ");
         paperQ = userInput.nextLine();
+
+        kind = "Art Album";
 
         status = "Available";
     }

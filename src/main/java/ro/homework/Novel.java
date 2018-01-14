@@ -16,7 +16,7 @@ public class Novel extends Book {
         return BookInfo;
     }
 
-    public void createNovel() {
+    public void createBook() {
         System.out.println("Enter the title of the novel: ");
         title = userInput.nextLine();
 
@@ -28,6 +28,8 @@ public class Novel extends Book {
 
         System.out.println("Enter the type of the novel: ");
         type = userInput.nextLine();
+
+        kind = "Novel";
 
         status = "Available";
     }
