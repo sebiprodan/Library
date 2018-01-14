@@ -30,7 +30,5 @@ public class Novel extends Book {
         type = userInput.nextLine();
 
         kind = "Novel";
-
-        status = "Available";
-    }
+        }
 }

@@ -31,7 +31,6 @@ public class ArtAlbum extends Book{
 
         kind = "Art Album";
 
-        status = "Available";
     }
 }
 
