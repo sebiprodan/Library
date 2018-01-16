@@ -6,7 +6,8 @@ public class ArtAlbum extends Book{
 
     public String displayBook() {
 
-        String BookInfo = "----------------------------" +
+        String BookInfo =
+                "\n-------------------------------------" +
                 "\nTitle:........................" + title +
                 "\nAuthor:......................." + author +
                 "\nNumber of Pages:.............." + page +
@@ -30,8 +31,6 @@ public class ArtAlbum extends Book{
         paperQ = userInput.nextLine();
 
         kind = "Art Album";
-
-        status = "Available";
 
     }
 }

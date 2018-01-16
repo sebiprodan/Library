@@ -24,23 +24,34 @@ public class Book {
 
     public static void displayMenu() {
 
-        System.out.println("\n1- Check library list.");
+        System.out.println("\n1- Check the Library book list.");
         System.out.println("2- Add a book to the Library.");
         System.out.println("3- Remove a book from the Library.");
         System.out.println("4- Delete the entire Library.");
         System.out.println("0- Exit.");
         System.out.print("\nEnter your option here: ");
-        choice = choiceInput.nextInt();//User inputs a choice (integer).
+        choice = choiceInput.nextInt();//User inputs a choice.
 
     }
 
     public String displayBook() {
 
-        String BookInfo = "----------------------------" +
+        String BookInfo =
+                "\n-------------------------------------" +
                 "\nTitle:........................" + title +
                 "\nAuthor:......................." + author +
                 "\nNumber of Pages:.............." + page +
                 "\nKind:........................." + kind +
+                "\n-------------------------------------";
+        return BookInfo;
+    }
+
+    public String displayBook(int bookChoice) {
+
+        String BookInfo =
+                "\n-------------------------------------" +
+                "\nTitle:........................" + title +
+                "\nAuthor:......................." + author +
                 "\n-------------------------------------";
         return BookInfo;
     }
@@ -77,16 +88,15 @@ public class Book {
     public void displayBookList() {
         if (BookList.size() == 0) {//If the library is empty, it goes back to menu and choice.
             System.out.println(">-------------------------------------------------------------");
-            System.out.println("\n> There Library is Empty! Please add a book first!\n");
+            System.out.println("\n> Library is Empty! Please add a book first!\n");
             System.out.println(">-------------------------------------------------------------");
-            displayMenu();//Display menu.
-            choice = choiceInput.nextInt();//Register new choice.
+            displayMenu();
+            choice = choiceInput.nextInt();
 
         } else {
             for (int i = 0; i < BookList.size(); i++) {
-                System.out.printf("\n>-----------Book Index: [%s]---------------------------------\n", i + 1);
+                System.out.printf("\n> Book number: [%s]\n", i + 1);
                 System.out.println(BookList.get(i).displayBook());
-                System.out.println(">-------------------------------------------------------------");
             }
         }
     }
@@ -94,7 +104,7 @@ public class Book {
     public void removeBook() {
         if (BookList.size() == 0) {
             System.out.println("---------------------------------------------------------");
-            System.out.println("\nLibrary is empty! Please add a Book first!");
+            System.out.println("\n> Library is Empty! Please add a Book first!");
             System.out.println("---------------------------------------------------------");
             choice = 5;
         } else {
@@ -103,18 +113,17 @@ public class Book {
             System.out.println("---------------------------------------------------------");
 
             int i = 0;
-            while (i < BookList.size() && BookList.size() > 0) {//show the user the list of all the books
-                System.out.printf("\n> Book number %s:\n%s", i + 1, BookList.get(i));
+            while (i < BookList.size() && BookList.size() > 0) {
+                System.out.printf("\n> Book number: %s\n%s", i + 1, BookList.get(i).displayBook());
                 i = i + 1;
-            }//end of while loop.
+            }
 
             System.out.println("\n\n> Choose an available book from the above list and write down it's number: ");
             bookChoice = choiceInput.nextInt(); //register user's book choice.
 
             if (bookChoice > 0 && bookChoice <= BookList.size()) {
                 bookChoice--;
-                System.out.printf("\n> You have chosen to delete the following book: %s\n", BookList.get(bookChoice));
-                System.out.printf("\n> The Book %s is deleted.\n", BookList.get(bookChoice));
+                System.out.printf("\n> The Book %s is deleted.\n", BookList.get(bookChoice).displayBook(bookChoice));
                 BookList.remove(bookChoice);
                 choice = 5;
             } else if (bookChoice == 0 || bookChoice > BookList.size()) {
@@ -125,23 +134,32 @@ public class Book {
     }
 
     public void emptyLibrary() {
-        System.out.println("\n> WARNING < You have chosen to delete all books in the library! ");
-        System.out.println("> Are you sure?? Enter yes or no: ");
-        String confirmation = userInput.nextLine();
 
-        if (confirmation.equalsIgnoreCase("yes")) {
-            System.out.println("> Library is being deleted...");
-            BookList.clear();
-            System.out.println("> Library is Empty!");
-            choice = 5;
-        } else if (confirmation.equalsIgnoreCase("no")) {
-            System.out.println("\n > Back to main menu.");
+        if (BookList.size() == 0) {
+            System.out.println("---------------------------------------------------------");
+            System.out.println("\n> Library is empty! Please add a Book first!");
+            System.out.println("---------------------------------------------------------");
             choice = 5;
         } else {
-            System.out.println("\n< MISSPELLING > Check your input.");
-            choice = 4;
+            System.out.println("\n> WARNING < You have chosen to delete all books in the library! ");
+            System.out.println("> Are you sure?? Enter yes or no: ");
+            String confirmation = userInput.nextLine();
+
+            if (confirmation.equalsIgnoreCase("yes")) {
+                System.out.println("> Library is being deleted...");
+                BookList.clear();
+                System.out.println("> Library is Empty!");
+                choice = 5;
+            } else if (confirmation.equalsIgnoreCase("no")) {
+                System.out.println("\n > Back to main menu.");
+                choice = 5;
+            } else {
+                System.out.println("\n< MISSPELLING > Check your input.");
+                choice = 4;
+            }
         }
     }
+
 
     public void run() {
 
@@ -149,59 +167,59 @@ public class Book {
 
         exit:
 
-        while (choice != 0) {
-            try {
+        while (choice == 0 || choice < 6) {
+
 //Choice 1:
-                if (choice == 1 && BookList.size() > 0) {
+            if (choice == 1 && BookList.size() > 0) {
 
-                    displayBookList();
-                    choice = 5;
-                }
+                displayBookList();
+                choice = 5;
+            }
 
-                if (choice == 1 && BookList.size() == 0) {
-                    System.out.println("\nLibrary is empty! Please add a Book first!");
-                    choice = 5;
-                }
+            if (choice == 1 && BookList.size() == 0) {
+                System.out.println("---------------------------------------------------------");
+                System.out.println("\n> Library is Empty! Please add a Book first!");
+                System.out.println("---------------------------------------------------------");
+                choice = 5;
+            }
 //Choice 2:
-                if (choice == 2) {
-                    //createBook();
-                    createBook();
+            if (choice == 2) {
+                //createBook();
+                createBook();
+                displayMenu();
+            }
+//Choice 3:
+            if (choice == 3) {
+                removeBook();
+                if (BookList.size() > 0) {
+                    displayMenu();
+                } else {
+                    choice = 5;
+                }
+            }
+//Choice 4:
+            if (choice == 4) {
+                emptyLibrary();
+            }
+//Choice 5:
+            if (choice == 5) {
                     displayMenu();
                 }
-//Choice 3:
-                if (choice == 3) {
-                    removeBook();
-                    if (BookList.size() > 0) {
-                        displayMenu();
-                    } else {
-                        choice = 5;
-                    }
-                }
-//Choice 4:
-                if (choice == 4) {
-                    emptyLibrary();
-                }
-//Choice 5:
-                if (choice == 5) {
-                    if (BookList.size() > 0) {
-                        displayMenu();
-                    } else if (BookList.size() == 0) {
-                        displayMenu();
-                    }
-                }
 //Choice 0:
-                if (choice == 0) {
-                    break exit;
-                }
-            } catch (InputMismatchException error) {
-                System.out.println(" < ERROR > ");
+            if (choice == 0) {
                 break exit;
             }
+//ERROR
+            if (choice > 5 || choice < 0) {
+                System.out.println("\n < ERROR >  Check your input!! The input must be a number from 0 to 4");
+                choice = 5;
+            }
+
 
         }//end of while loop.
 
         System.out.println("####  You have Exited the Library!  ####");
 
-    }//End of run() method.
+    }
 
 }
